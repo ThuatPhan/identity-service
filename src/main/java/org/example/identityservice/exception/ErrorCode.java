@@ -20,6 +20,9 @@ public enum ErrorCode {
     INVALID_CREDENTIALS(1006, HttpStatus.UNAUTHORIZED, "Invalid username or password"),
     UNAUTHENTICATED(1007, HttpStatus.UNAUTHORIZED, "Unauthenticated request"),
 
+    PERMISSION_ALREADY_EXISTS(1008, HttpStatus.BAD_REQUEST, "Permission already exists"),
+    ROLE_ALREADY_EXISTS(1009, HttpStatus.BAD_REQUEST, "Role already exists"),
+
     UNCATEGORIZED_ERROR(5000, HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred"),
     ;
 

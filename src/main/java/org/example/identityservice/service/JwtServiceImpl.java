@@ -10,17 +10,21 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import org.example.identityservice.entity.InvalidatedToken;
+import org.example.identityservice.entity.Role;
 import org.example.identityservice.entity.User;
 import org.example.identityservice.exception.AppException;
 import org.example.identityservice.exception.ErrorCode;
 import org.example.identityservice.repository.InvalidatedTokenRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.Date;
+import java.util.StringJoiner;
 import java.util.UUID;
 
 @Service
@@ -47,6 +51,7 @@ public class JwtServiceImpl implements JwtService {
                 .issueTime(new Date())
                 .expirationTime(
                         new Date(Instant.now().plus(30, ChronoUnit.MINUTES).toEpochMilli()))
+                .claim("scope", buildScope(user))
                 .build();
         Payload payload = new Payload(claims.toJSONObject());
         JWSObject jwsObject = new JWSObject(header, payload);
@@ -90,5 +95,17 @@ public class JwtServiceImpl implements JwtService {
                 .id(signedJWT.getJWTClaimsSet().getJWTID())
                 .expiryTime(signedJWT.getJWTClaimsSet().getExpirationTime())
                 .build());
+    }
+
+    private String buildScope(User user) {
+        StringJoiner scopes = new StringJoiner(" ");
+
+        if (!CollectionUtils.isEmpty(user.getRoles())) {
+            for (Role role : user.getRoles()) {
+                scopes.add(role.getName());
+            }
+        }
+
+        return scopes.toString();
     }
 }
