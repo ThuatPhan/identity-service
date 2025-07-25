@@ -1,11 +1,12 @@
 package org.example.identityservice.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import jakarta.persistence.*;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "roles")
@@ -29,7 +30,6 @@ public class Role {
     @JoinTable(
             name = "role_permissions",
             joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "permission_id"))
     Set<Permission> permissions = new HashSet<>();
 }

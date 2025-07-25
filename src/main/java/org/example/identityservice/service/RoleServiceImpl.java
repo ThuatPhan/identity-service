@@ -1,8 +1,8 @@
 package org.example.identityservice.service;
 
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import java.util.HashSet;
+import java.util.List;
+
 import org.example.identityservice.dto.request.RoleRequest;
 import org.example.identityservice.dto.response.RoleResponse;
 import org.example.identityservice.entity.Permission;
@@ -15,8 +15,9 @@ import org.example.identityservice.repository.RoleRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Service
 @RequiredArgsConstructor

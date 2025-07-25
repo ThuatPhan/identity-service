@@ -1,8 +1,7 @@
 package org.example.identityservice.service;
 
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import java.util.List;
+
 import org.example.identityservice.dto.request.PermissionRequest;
 import org.example.identityservice.dto.response.PermissionResponse;
 import org.example.identityservice.entity.Permission;
@@ -13,12 +12,14 @@ import org.example.identityservice.repository.PermissionRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class PermissionServiceImpl implements PermissionService{
+public class PermissionServiceImpl implements PermissionService {
     PermissionRepository permissionRepository;
     PermissionMapper permissionMapper;
 

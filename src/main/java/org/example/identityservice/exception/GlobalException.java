@@ -1,5 +1,7 @@
 package org.example.identityservice.exception;
 
+import java.nio.file.AccessDeniedException;
+
 import org.example.identityservice.dto.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,13 @@ public class GlobalException {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ApiResponse<?>> handleRuntimeException(RuntimeException exception) {
         ErrorCode errorCode = ErrorCode.UNCATEGORIZED_ERROR;
+        return ResponseEntity.status(errorCode.getStatusCode())
+                .body(ApiResponse.error(errorCode.getCode(), errorCode.getMessage()));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse<?>> handleAccessDeniedException(AccessDeniedException exception) {
+        ErrorCode errorCode = ErrorCode.ACCESS_DENIED;
         return ResponseEntity.status(errorCode.getStatusCode())
                 .body(ApiResponse.error(errorCode.getCode(), errorCode.getMessage()));
     }

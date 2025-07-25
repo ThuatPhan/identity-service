@@ -1,19 +1,21 @@
 package org.example.identityservice.controller;
 
+import java.util.List;
+
 import jakarta.validation.Valid;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
+
 import org.example.identityservice.dto.ApiResponse;
+import org.example.identityservice.dto.request.CreatePasswordRequest;
 import org.example.identityservice.dto.request.CreateUserRequest;
 import org.example.identityservice.dto.response.UserResponse;
 import org.example.identityservice.service.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
@@ -29,11 +31,19 @@ public class UserController {
         return ApiResponse.success(201, userService.createUser(request));
     }
 
-
     @GetMapping
     public ApiResponse<List<UserResponse>> getUsers() {
-        SecurityContextHolder.getContext().getAuthentication().getAuthorities().forEach(auth -> log.info(auth.getAuthority()));
         return ApiResponse.success(200, userService.getUsers());
     }
 
+    @GetMapping("/info")
+    public ApiResponse<UserResponse> getMyInfo() {
+        return ApiResponse.success(200, userService.getMyInfo());
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/create-password")
+    public void createPassword(@RequestBody @Valid CreatePasswordRequest request) {
+        userService.createPassword(request);
+    }
 }

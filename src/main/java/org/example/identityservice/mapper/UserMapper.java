@@ -1,12 +1,12 @@
 package org.example.identityservice.mapper;
 
+import java.util.List;
+
 import org.example.identityservice.dto.request.CreateUserRequest;
 import org.example.identityservice.dto.request.UpdateUserRequest;
 import org.example.identityservice.dto.response.UserResponse;
 import org.example.identityservice.entity.User;
 import org.mapstruct.*;
-
-import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {

@@ -1,10 +1,9 @@
 package org.example.identityservice.controller;
 
-import com.nimbusds.jose.JOSEException;
+import java.text.ParseException;
+
 import jakarta.validation.Valid;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+
 import org.example.identityservice.dto.ApiResponse;
 import org.example.identityservice.dto.request.AuthenticationRequest;
 import org.example.identityservice.dto.request.IntrospectRequest;
@@ -13,12 +12,13 @@ import org.example.identityservice.dto.request.RefreshTokenRequest;
 import org.example.identityservice.dto.response.AuthenticationResponse;
 import org.example.identityservice.dto.response.IntrospectResponse;
 import org.example.identityservice.service.AuthenticationService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
+import com.nimbusds.jose.JOSEException;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @RestController
 @RequestMapping("/auth")
@@ -33,20 +33,24 @@ public class AuthenticationController {
     }
 
     @PostMapping("/refresh-token")
-    public ApiResponse<AuthenticationResponse> refreshToken(
-            @RequestBody @Valid RefreshTokenRequest request) throws ParseException, JOSEException {
+    public ApiResponse<AuthenticationResponse> refreshToken(@RequestBody @Valid RefreshTokenRequest request)
+            throws ParseException, JOSEException {
         return ApiResponse.success(200, authenticationService.refreshToken(request));
     }
 
     @PostMapping("/introspect")
-    public ApiResponse<IntrospectResponse> introspect(
-            @RequestBody @Valid IntrospectRequest request) throws ParseException, JOSEException {
+    public ApiResponse<IntrospectResponse> introspect(@RequestBody @Valid IntrospectRequest request)
+            throws ParseException, JOSEException {
         return ApiResponse.success(200, authenticationService.introspect(request));
     }
 
     @PostMapping("/logout")
-    public void logout(
-            @RequestBody @Valid LogoutRequest request) throws ParseException, JOSEException {
+    public void logout(@RequestBody @Valid LogoutRequest request) throws ParseException, JOSEException {
         authenticationService.logout(request);
+    }
+
+    @PostMapping("/outbound/authentication")
+    public ApiResponse<AuthenticationResponse> outboundAuthentication(@RequestParam String code) {
+        return ApiResponse.success(200, authenticationService.outboundAuthenticate(code));
     }
 }

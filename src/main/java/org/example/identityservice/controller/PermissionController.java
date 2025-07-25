@@ -1,8 +1,7 @@
 package org.example.identityservice.controller;
 
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import java.util.List;
+
 import org.example.identityservice.dto.ApiResponse;
 import org.example.identityservice.dto.request.PermissionRequest;
 import org.example.identityservice.dto.response.PermissionResponse;
@@ -10,7 +9,9 @@ import org.example.identityservice.service.PermissionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @RestController
 @RequestMapping("/permissions")
