@@ -1,10 +1,11 @@
 package org.example.identityservice.service;
 
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jwt.SignedJWT;
+import java.text.ParseException;
+
 import org.example.identityservice.entity.User;
 
-import java.text.ParseException;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jwt.SignedJWT;
 
 public interface JwtService {
     String generateToken(User user);

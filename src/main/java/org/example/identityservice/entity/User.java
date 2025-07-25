@@ -1,14 +1,16 @@
 package org.example.identityservice.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+
+import jakarta.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "users")
@@ -26,8 +28,17 @@ public class User {
     @Column(unique = true, nullable = false)
     String username;
 
-    @Column(nullable = false)
     String password;
+
+    String email;
+
+    @Column(nullable = false)
+    String firstName;
+
+    @Column(nullable = false)
+    String lastName;
+
+    String avatar;
 
     @Column(unique = true)
     @CreationTimestamp
@@ -40,7 +51,6 @@ public class User {
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Role> roles = new HashSet<>();
 }

@@ -1,9 +1,9 @@
 package org.example.identityservice.configuration;
 
-import com.nimbusds.jose.JOSEException;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import java.text.ParseException;
+import java.util.Objects;
+import javax.crypto.spec.SecretKeySpec;
+
 import org.example.identityservice.dto.request.IntrospectRequest;
 import org.example.identityservice.dto.response.IntrospectResponse;
 import org.example.identityservice.service.AuthenticationService;
@@ -15,9 +15,11 @@ import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.spec.SecretKeySpec;
-import java.text.ParseException;
-import java.util.Objects;
+import com.nimbusds.jose.JOSEException;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Component
 @RequiredArgsConstructor
@@ -26,14 +28,14 @@ public class CustomJwtDecoder implements JwtDecoder {
     final AuthenticationService authenticationService;
     NimbusJwtDecoder nimbusJwtDecoder = null;
 
-    @Value("${security.jwt.secret}")
+    @Value("${jwt.secret}")
     String SECRET;
 
     @Override
     public Jwt decode(String token) throws JwtException {
         try {
-            IntrospectResponse response = authenticationService.
-                    introspect(IntrospectRequest.builder().accessToken(token).build());
+            IntrospectResponse response = authenticationService.introspect(
+                    IntrospectRequest.builder().accessToken(token).build());
 
             if (!response.isValid()) {
                 throw new JwtException("Invalid token");

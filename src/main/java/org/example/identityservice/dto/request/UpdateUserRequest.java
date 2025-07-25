@@ -2,6 +2,7 @@ package org.example.identityservice.dto.request;
 
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -14,7 +15,11 @@ public class UpdateUserRequest {
 
     @Pattern(
             regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
-            message = "Password must be at least 8 characters long, include uppercase, lowercase, a number and a special character"
-    )
+            message =
+                    "Password must be at least 8 characters long, include uppercase, lowercase, a number and a special character")
     String password;
+
+    String firstName;
+
+    String lastName;
 }

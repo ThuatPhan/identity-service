@@ -1,9 +1,9 @@
 package org.example.identityservice.controller;
 
+import java.util.List;
+
 import jakarta.validation.Valid;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+
 import org.example.identityservice.dto.ApiResponse;
 import org.example.identityservice.dto.request.RoleRequest;
 import org.example.identityservice.dto.response.RoleResponse;
@@ -11,7 +11,9 @@ import org.example.identityservice.service.RoleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @RestController
 @RequestMapping("/roles")
