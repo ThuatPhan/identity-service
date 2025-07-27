@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: identity-service
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+outbound:
+  identity:
+    client-id: ${IDENTITY_CLIENT_ID}
+    client-secret: ${IDENTITY_CLIENT_SECRET}
+    redirect-uri: ${IDENTITY_REDIRECT_URI}
+    grant_type: authorization_code
+
+jwt:
+  secret: ${JWT_SECRET}
+  issuer: ${JWT_ISSUER}
+  expiry-seconds: ${JWT_EXPIRY_SECONDS}
+
+admin:
+  username: ${ADMIN_USERNAME}
+  password: ${ADMIN_PASSWORD}
