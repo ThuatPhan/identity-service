@@ -31,7 +31,7 @@ Make sure your system has the following installed:
 To get started, first clone the repository:
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/ThuatPhan/identity-service.git
 cd identity-service
 ```
 
