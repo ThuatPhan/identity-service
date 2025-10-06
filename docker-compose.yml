@@ -14,9 +14,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  app:
+  backend:
     build: .
-    container_name: identity_service_app
+    container_name: identity_service_backend
     restart: always
     depends_on:
       - db
@@ -24,11 +24,16 @@ services:
       - "8080:8080"
     env_file:
       - .env
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+
+  frontend:
+    build:
+      context: ./web-app
+    container_name: identity_service_frontend
+    restart: always
+    ports:
+      - "5173:4173"
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:

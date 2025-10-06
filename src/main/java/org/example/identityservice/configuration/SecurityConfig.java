@@ -25,14 +25,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/users/**", "/auth/**", "/actuator/**")
+        httpSecurity.authorizeHttpRequests(request -> request
+                .requestMatchers("/users/**", "/auth/**", "/actuator/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated());
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
 
-        httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder))
+        httpSecurity.oauth2ResourceServer(oauth2 -> oauth2
+                .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder))
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
 
         return httpSecurity.build();
@@ -50,11 +52,11 @@ public class SecurityConfig {
 
         return jwtAuthenticationConverter;
     }
-
+    
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("http://localhost:3000");
+        corsConfiguration.addAllowedOrigin("http://localhost:5173");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
 
